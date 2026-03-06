@@ -1,2 +1,21 @@
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: var(--color-dark-light);
+  color: var(--color-white);
+}
+
+.logo {
+  display: contents;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
 }

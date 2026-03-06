@@ -3,8 +3,10 @@
 ======================================== */
 
 :root {
-  --color-neutral-darkest: #000;
+  --color-dark: #000;
+  --color-dark-light: #333;
   --color-white: #fff;
+  --color-white-off: #ddd;
 }
 
 /* =====================================
