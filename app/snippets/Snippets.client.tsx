@@ -8,6 +8,7 @@ import { useDebouncedCallback } from "use-debounce";
 import clsx from "clsx";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import SearchBox from "@/components/SearchBox.tsx/SearchBox";
+import Pagination from "@/components/Pagination/Pagination";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
@@ -37,6 +38,13 @@ export default function SnippetsClient() {
         <Sidebar onChange={(tag) => setTag(tag)} />
         <div className={css.contentWrap}>
           <SearchBox onChange={updateSearchWord} />
+          {isSuccess && totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              page={page}
+              updatePage={setPage}
+            />
+          )}
         </div>
       </div>
     </section>
