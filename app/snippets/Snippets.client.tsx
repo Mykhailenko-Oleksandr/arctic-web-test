@@ -5,6 +5,8 @@ import css from "./Snippets.module.css";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchSnippets } from "@/lib/api/clientApi";
 import { useDebouncedCallback } from "use-debounce";
+import clsx from "clsx";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
@@ -27,5 +29,11 @@ export default function SnippetsClient() {
     setPage(1);
   }, 500);
 
-  return <section className={css.section}></section>;
+  return (
+    <section className={css.section}>
+      <div className={clsx("container", css.container)}>
+        <Sidebar onChange={(tag) => setTag(tag)} />
+      </div>
+    </section>
+  );
 }
