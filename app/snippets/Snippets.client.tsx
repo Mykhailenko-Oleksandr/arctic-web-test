@@ -9,11 +9,13 @@ import clsx from "clsx";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import SearchBox from "@/components/SearchBox.tsx/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
+import Modal from "@/components/Modal/Modal";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
   const [page, setPage] = useState(1);
   const [tag, setTag] = useState("");
+  const [isCreateModal, setIsCreateModal] = useState(false);
 
   const { data, isError, isSuccess } = useQuery({
     queryKey: ["snippets", topic, page, tag],
@@ -33,20 +35,35 @@ export default function SnippetsClient() {
   }, 500);
 
   return (
-    <section className={css.section}>
-      <div className={clsx("container", css.container)}>
-        <Sidebar onChange={(tag) => setTag(tag)} />
-        <div className={css.contentWrap}>
-          <SearchBox onChange={updateSearchWord} />
-          {isSuccess && totalPages > 1 && (
-            <Pagination
-              totalPages={totalPages}
-              page={page}
-              updatePage={setPage}
-            />
-          )}
+    <>
+      <section className={css.section}>
+        <div className={clsx("container", css.container)}>
+          <Sidebar onChange={(tag) => setTag(tag)} />
+          <div className={css.contentWrap}>
+            <SearchBox onChange={updateSearchWord} />
+            {isSuccess && totalPages > 1 && (
+              <Pagination
+                totalPages={totalPages}
+                page={page}
+                updatePage={setPage}
+              />
+            )}
+            <button
+              type="button"
+              className={css.createBtn}
+              onClick={() => setIsCreateModal(true)}
+            >
+              Create snippet
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {isCreateModal && (
+        <Modal onClose={() => setIsCreateModal(false)}>
+          <h2>Hello</h2>
+        </Modal>
+      )}
+    </>
   );
 }

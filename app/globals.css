@@ -8,7 +8,11 @@
   --color-dark-soft: #444444;
   --color-dark-medium: #2c2c2c;
   --color-white: #fff;
+  --color-white-soft: #f8f9fa;
+  --color-white-muted: #dee2e6;
   --color-white-off: #ddd;
+  --color-blue: #0d6efd;
+  --color-blue-light: #0b5ed7;
 }
 
 /* =====================================
