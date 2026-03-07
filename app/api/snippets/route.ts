@@ -7,7 +7,7 @@ import { logErrorResponse } from "../_utils/utils";
 export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies();
-    const search = request.nextUrl.searchParams.get("search") ?? "";
+    const q = request.nextUrl.searchParams.get("q") ?? "";
     const page = Number(request.nextUrl.searchParams.get("page") ?? 1);
     const limit = Number(request.nextUrl.searchParams.get("limit") ?? 10);
     const rawTag = request.nextUrl.searchParams.get("tag") ?? "";
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
     const res = await api("/snippets", {
       params: {
-        ...(search !== "" && { search }),
+        ...(q !== "" && { q }),
         page,
         limit,
         ...(tag && { tag }),

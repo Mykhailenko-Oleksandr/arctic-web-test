@@ -7,6 +7,7 @@ import { fetchSnippets } from "@/lib/api/clientApi";
 import { useDebouncedCallback } from "use-debounce";
 import clsx from "clsx";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import SearchBox from "@/components/SearchBox.tsx/SearchBox";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
@@ -23,6 +24,7 @@ export default function SnippetsClient() {
   const totalPages = data?.totalPages ?? 0;
 
   console.log(data);
+  console.log(topic);
 
   const updateSearchWord = useDebouncedCallback((searchWord: string) => {
     setTopic(searchWord);
@@ -33,6 +35,9 @@ export default function SnippetsClient() {
     <section className={css.section}>
       <div className={clsx("container", css.container)}>
         <Sidebar onChange={(tag) => setTag(tag)} />
+        <div className={css.contentWrap}>
+          <SearchBox onChange={updateSearchWord} />
+        </div>
       </div>
     </section>
   );

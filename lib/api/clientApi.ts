@@ -21,7 +21,7 @@ export async function fetchSnippets(
 
   const { data } = await nextServer.get<ResponseAPI>("/snippets", {
     params: {
-      search: searchWord,
+      q: searchWord,
       tag: tag,
       page,
       limit,

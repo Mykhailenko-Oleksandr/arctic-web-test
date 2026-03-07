@@ -2,5 +2,10 @@
 }
 
 .container {
+  display: flex;
   padding-left: 0;
+}
+
+.contentWrap {
+  padding: 16px 32px;
 }
