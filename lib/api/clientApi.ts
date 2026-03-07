@@ -34,3 +34,8 @@ export async function deleteSnippet(id: string) {
   const { data } = await nextServer.delete<Snippet>(`/snippets/${id}`);
   return data;
 }
+
+export async function fetchSnipperById(id: string) {
+  const { data } = await nextServer.get<Snippet>(`/snippets/${id}`);
+  return data;
+}

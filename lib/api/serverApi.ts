@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { nextServer } from "./api";
 import { ResponseAPI } from "./clientApi";
+import { Snippet } from "@/types/snippet";
 
 export async function fetchSnippets(
   searchWord: string,
@@ -20,6 +21,17 @@ export async function fetchSnippets(
       page,
       limit,
     },
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  return data;
+}
+
+export async function fetchSnipperById(id: string) {
+  const cookieStore = await cookies();
+
+  const { data } = await nextServer.get<Snippet>(`/snippets/${id}`, {
     headers: {
       Cookie: cookieStore.toString(),
     },

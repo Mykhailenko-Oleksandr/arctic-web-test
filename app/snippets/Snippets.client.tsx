@@ -11,6 +11,7 @@ import SearchBox from "@/components/SearchBox.tsx/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
 import SnippetsList from "@/components/SnippetsList/SnippetsList";
+import Loader from "@/components/Loader/Loader";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
@@ -18,7 +19,7 @@ export default function SnippetsClient() {
   const [tag, setTag] = useState("");
   const [isCreateModal, setIsCreateModal] = useState(false);
 
-  const { data, isError, isSuccess } = useQuery({
+  const { data, isError, isSuccess, isLoading } = useQuery({
     queryKey: ["snippets", topic, page, tag],
     queryFn: () => fetchSnippets(topic, page, 12, tag),
     placeholderData: keepPreviousData,
@@ -27,44 +28,45 @@ export default function SnippetsClient() {
 
   const totalPages = data?.totalPages ?? 0;
 
-  console.log(data);
-  console.log(topic);
-
   const updateSearchWord = useDebouncedCallback((searchWord: string) => {
     setTopic(searchWord);
     setPage(1);
   }, 500);
 
+  if (isLoading) return <Loader />;
+
   return (
     <>
-      <section className={css.section}>
-        <div className={clsx("container", css.container)}>
-          <Sidebar onChange={(tag) => setTag(tag)} />
-          <div className={css.contentWrap}>
-            <div className={css.topBox}>
-              <SearchBox onChange={updateSearchWord} />
-              {isSuccess && totalPages > 1 && (
-                <Pagination
-                  totalPages={totalPages}
-                  page={page}
-                  updatePage={setPage}
-                />
-              )}
-              <button
-                type="button"
-                className={css.createBtn}
-                onClick={() => setIsCreateModal(true)}
-              >
-                Create snippet
-              </button>
-            </div>
-
-            {data !== undefined && data?.snippets.length > 0 && (
-              <SnippetsList snippets={data?.snippets} />
-            )}
-          </div>
+      <Sidebar onChange={(tag) => setTag(tag)} />
+      <div className={css.contentWrap}>
+        <div className={css.topBox}>
+          <SearchBox onChange={updateSearchWord} />
+          {isSuccess && totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              page={page}
+              updatePage={setPage}
+            />
+          )}
+          <button
+            type="button"
+            className={css.createBtn}
+            onClick={() => setIsCreateModal(true)}
+          >
+            Create snippet
+          </button>
         </div>
-      </section>
+
+        {isError && <p>There was an error, please try again...</p>}
+
+        {data !== undefined && data?.snippets.length === 0 && (
+          <p>No snippets found</p>
+        )}
+
+        {data !== undefined && data?.snippets.length > 0 && (
+          <SnippetsList snippets={data?.snippets} />
+        )}
+      </div>
 
       {isCreateModal && (
         <Modal onClose={() => setIsCreateModal(false)}>
