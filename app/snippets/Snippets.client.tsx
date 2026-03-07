@@ -10,6 +10,7 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import SearchBox from "@/components/SearchBox.tsx/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
+import SnippetsList from "@/components/SnippetsList/SnippetsList";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
@@ -40,21 +41,27 @@ export default function SnippetsClient() {
         <div className={clsx("container", css.container)}>
           <Sidebar onChange={(tag) => setTag(tag)} />
           <div className={css.contentWrap}>
-            <SearchBox onChange={updateSearchWord} />
-            {isSuccess && totalPages > 1 && (
-              <Pagination
-                totalPages={totalPages}
-                page={page}
-                updatePage={setPage}
-              />
+            <div className={css.topBox}>
+              <SearchBox onChange={updateSearchWord} />
+              {isSuccess && totalPages > 1 && (
+                <Pagination
+                  totalPages={totalPages}
+                  page={page}
+                  updatePage={setPage}
+                />
+              )}
+              <button
+                type="button"
+                className={css.createBtn}
+                onClick={() => setIsCreateModal(true)}
+              >
+                Create snippet
+              </button>
+            </div>
+
+            {data !== undefined && data?.snippets.length > 0 && (
+              <SnippetsList snippets={data?.snippets} />
             )}
-            <button
-              type="button"
-              className={css.createBtn}
-              onClick={() => setIsCreateModal(true)}
-            >
-              Create snippet
-            </button>
           </div>
         </div>
       </section>

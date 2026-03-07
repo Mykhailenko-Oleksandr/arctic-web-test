@@ -30,7 +30,7 @@ export async function fetchSnippets(
   return data;
 }
 
-// export async function sample(id: string) {
-//   const res = await nextServer.get<{a: string}>(`/sample/${id}`);
-//   return res.data;
-// }
+export async function deleteSnippet(id: string) {
+  const { data } = await nextServer.delete<Snippet>(`/snippets/${id}`);
+  return data;
+}
