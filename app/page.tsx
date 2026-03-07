@@ -19,7 +19,7 @@ export default function Home() {
           with the API.
         </p>
 
-        <Link className={css.startLink} href="/snippers">
+        <Link className={css.startLink} href="/snippets">
           Get Started
         </Link>
       </div>
