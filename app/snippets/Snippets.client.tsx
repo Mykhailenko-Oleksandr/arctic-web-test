@@ -5,13 +5,13 @@ import css from "./Snippets.module.css";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchSnippets } from "@/lib/api/clientApi";
 import { useDebouncedCallback } from "use-debounce";
-import clsx from "clsx";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import SearchBox from "@/components/SearchBox.tsx/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import Modal from "@/components/Modal/Modal";
 import SnippetsList from "@/components/SnippetsList/SnippetsList";
 import Loader from "@/components/Loader/Loader";
+import FormSnippet from "@/components/FormSnippet/FormSnippet";
 
 export default function SnippetsClient() {
   const [topic, setTopic] = useState("");
@@ -70,7 +70,8 @@ export default function SnippetsClient() {
 
       {isCreateModal && (
         <Modal onClose={() => setIsCreateModal(false)}>
-          <h2>Hello</h2>
+          <h2 className={css.modalTitle}>Create snipper</h2>
+          <FormSnippet closeModal={() => setIsCreateModal(false)} />
         </Modal>
       )}
     </>

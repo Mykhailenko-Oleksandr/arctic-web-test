@@ -37,3 +37,8 @@
 .createBtn:hover {
   background-color: var(--color-blue-light);
 }
+
+.modalTitle {
+  color: var(--color-dark-medium);
+  margin-bottom: 24px;
+}

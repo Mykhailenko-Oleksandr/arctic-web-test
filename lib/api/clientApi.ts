@@ -1,5 +1,6 @@
 import { Snippet } from "@/types/snippet";
 import { nextServer } from "./api";
+import { Tag } from "@/types/tag";
 
 export interface ResponseAPI {
   page: number;
@@ -7,6 +8,13 @@ export interface ResponseAPI {
   totalSnippets: number;
   totalPages: number;
   snippets: Snippet[];
+}
+
+export interface SnippetsFormData {
+  title: string;
+  content: string;
+  tag: Tag[];
+  type: "Link" | "Note" | "Command";
 }
 
 export async function fetchSnippets(
@@ -38,4 +46,9 @@ export async function deleteSnippet(id: string) {
 export async function fetchSnipperById(id: string) {
   const { data } = await nextServer.get<Snippet>(`/snippets/${id}`);
   return data;
+}
+
+export async function createSnippet(data: SnippetsFormData) {
+  const res = await nextServer.post<Snippet>("/snippets", data);
+  return res.data;
 }
