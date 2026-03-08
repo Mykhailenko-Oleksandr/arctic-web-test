@@ -21,10 +21,10 @@ export default function Navigation() {
         </li>
         <li className={css.item}>
           <Link
-            href="/snippers"
+            href="/snippets"
             className={clsx(
               css.link,
-              pathname === "/snippers" && css.currentPage,
+              pathname === "/snippets" && css.currentPage,
             )}
           >
             Snippers
