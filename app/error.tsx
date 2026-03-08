@@ -7,12 +7,10 @@ type Props = {
 
 export default function Error({ reset }: Props) {
   return (
-    <div className={`container ${css.section}`}>
+    <div className={`container ${css.sectionError}`}>
       <h2 className={css.title}>Something went wrong 😢</h2>
       <p className={css.description}>Please try again later</p>
-      <button
-        className={css.buttonError}
-        onClick={() => reset()}>
+      <button className={css.buttonError} onClick={() => reset()}>
         Try again
       </button>
     </div>
