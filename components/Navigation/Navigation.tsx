@@ -27,7 +27,7 @@ export default function Navigation() {
               pathname === "/snippets" && css.currentPage,
             )}
           >
-            Snippers
+            Snippets
           </Link>
         </li>
       </ul>
