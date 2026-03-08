@@ -92,9 +92,9 @@ export default function FormSnippet({ closeModal, update, snippet }: Props) {
   const onSubmit: SubmitHandler<SnippetsFormData> = async (data) => {
     try {
       if (snippet) {
-        updateSnippetMutate.mutate({ id: snippet._id, data });
+        await updateSnippetMutate.mutateAsync({ id: snippet._id, data });
       } else {
-        createSnippetMutate.mutate(data);
+        await createSnippetMutate.mutateAsync(data);
       }
       closeModal();
       router.push("/snippets");
