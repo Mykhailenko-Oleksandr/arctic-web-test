@@ -5,11 +5,14 @@ import css from "./SnippetDetails.module.css";
 import { fetchSnipperById } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import { useState } from "react";
+import Modal from "@/components/Modal/Modal";
+import FormSnippet from "@/components/FormSnippet/FormSnippet";
 
 export default function SnippetDetailsClient() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const [isUpdateModal, setIsUpdateModal] = useState(false);
 
   const {
     data: snippet,
@@ -64,11 +67,26 @@ export default function SnippetDetailsClient() {
             </p>
           </div>
 
-          <button className={css.updateBtn} type="button">
+          <button
+            className={css.updateBtn}
+            type="button"
+            onClick={() => setIsUpdateModal(true)}
+          >
             Update snippet
           </button>
         </div>
       </div>
+
+      {isUpdateModal && (
+        <Modal onClose={() => setIsUpdateModal(false)}>
+          <h2 className={css.modalTitle}>Update snipper</h2>
+          <FormSnippet
+            closeModal={() => setIsUpdateModal(false)}
+            update
+            snippet={snippet}
+          />
+        </Modal>
+      )}
     </>
   );
 }

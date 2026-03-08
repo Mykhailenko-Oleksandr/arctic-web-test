@@ -52,3 +52,8 @@ export async function createSnippet(data: SnippetsFormData) {
   const res = await nextServer.post<Snippet>("/snippets", data);
   return res.data;
 }
+
+export async function updateSnippet(id: string, data: SnippetsFormData) {
+  const res = await nextServer.patch<Snippet>(`/snippets/${id}`, data);
+  return res.data;
+}

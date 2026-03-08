@@ -5,10 +5,15 @@ import * as yup from "yup";
 import toast from "react-hot-toast";
 import { Tag } from "@/types/tag";
 import clsx from "clsx";
-import { createSnippet, SnippetsFormData } from "@/lib/api/clientApi";
+import {
+  createSnippet,
+  SnippetsFormData,
+  updateSnippet,
+} from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import { ApiError } from "@/app/api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Snippet } from "@/types/snippet";
 
 const tags: Tag[] = [
   "Work",
@@ -22,25 +27,35 @@ const tags: Tag[] = [
 
 const schema = yup
   .object({
-    title: yup.string().min(1).max(50).required("Title is required"),
-    content: yup.string().min(10).max(100).required("Content is required"),
+    title: yup
+      .string()
+      .min(1, "Title must be at least 1 character")
+      .max(50, "Title must be at most 50 characters")
+      .required("Title is required"),
+    content: yup
+      .string()
+      .min(10, "Content must be at least 10 characters")
+      .max(100, "Content must be at most 100 characters")
+      .required("Content is required"),
     tag: yup
       .array()
       .of(yup.string().oneOf(tags).defined())
       .min(1, "Select at least one tag")
-      .required(),
+      .required("Tag is required"),
     type: yup
       .string()
-      .oneOf(["Link", "Note", "Command"])
+      .oneOf(["Link", "Note", "Command"], "Type must be Link, Note or Command")
       .required("Type is required"),
   })
   .required();
 
 interface Props {
+  update?: boolean;
+  snippet?: Snippet;
   closeModal: () => void;
 }
 
-export default function FormSnippet({ closeModal }: Props) {
+export default function FormSnippet({ closeModal, update, snippet }: Props) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -53,8 +68,19 @@ export default function FormSnippet({ closeModal }: Props) {
     resolver: yupResolver(schema),
   });
 
-  const createNoteMutate = useMutation({
+  const createSnippetMutate = useMutation({
     mutationFn: (data: SnippetsFormData) => createSnippet(data),
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["snippets"] });
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
+
+  const updateSnippetMutate = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: SnippetsFormData }) =>
+      updateSnippet(id, data),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["snippets"] });
     },
@@ -65,9 +91,14 @@ export default function FormSnippet({ closeModal }: Props) {
 
   const onSubmit: SubmitHandler<SnippetsFormData> = async (data) => {
     try {
-      createNoteMutate.mutate(data);
+      if (snippet) {
+        updateSnippetMutate.mutate({ id: snippet._id, data });
+      } else {
+        createSnippetMutate.mutate(data);
+      }
       closeModal();
       router.push("/snippets");
+      toast.success(update ? "Updated snippet" : "Created Snippet");
     } catch (error: unknown) {
       const err = error as ApiError;
 
@@ -85,6 +116,7 @@ export default function FormSnippet({ closeModal }: Props) {
         <input
           type="text"
           placeholder="Enter title"
+          defaultValue={snippet?.title}
           className={css.input}
           {...register("title")}
         />
@@ -97,6 +129,7 @@ export default function FormSnippet({ closeModal }: Props) {
       <div className={clsx(css.inputBox, css.textareaBox)}>
         <textarea
           rows={5}
+          defaultValue={snippet?.content}
           placeholder="Enter content"
           className={css.input}
           {...register("content")}
@@ -114,7 +147,12 @@ export default function FormSnippet({ closeModal }: Props) {
         {tags.map((tag) => {
           return (
             <label key={tag}>
-              <input type="checkbox" value={tag} {...register("tag")} />
+              <input
+                type="checkbox"
+                value={tag}
+                defaultChecked={snippet?.tag?.includes(tag)}
+                {...register("tag")}
+              />
               {tag}
             </label>
           );
@@ -130,7 +168,7 @@ export default function FormSnippet({ closeModal }: Props) {
           Type:&emsp;
           <select
             className={css.select}
-            defaultValue="Note"
+            defaultValue={snippet ? snippet.type : "Note"}
             {...register("type")}
           >
             <option value="Link">Link</option>
@@ -145,7 +183,7 @@ export default function FormSnippet({ closeModal }: Props) {
       </div>
 
       <button className={css.submitBtn} type="submit" disabled={!isValid}>
-        Create snippet
+        {update ? "Update snippet" : "Create snippet"}
       </button>
     </form>
   );

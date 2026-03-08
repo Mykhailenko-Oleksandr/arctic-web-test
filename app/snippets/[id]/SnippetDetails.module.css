@@ -119,3 +119,8 @@
     background-color: var(--color-dark-medium);
   }
 }
+
+.modalTitle {
+  color: var(--color-dark-medium);
+  margin-bottom: 24px;
+}
