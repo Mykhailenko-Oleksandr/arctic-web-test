@@ -7,9 +7,14 @@ import {
 import SnippetsClient from "./Snippets.client";
 import { fetchSnippets } from "@/lib/api/serverApi";
 import clsx from "clsx";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Snippets",
+};
 
 // Prefetch виконується тільки для першої сторінки без пошуку (topic="").
-// На клієнті NotesClient вже сам керує topic та page.
+// На клієнті SnippetsClient вже сам керує topic та page.
 const topic = "";
 const page = 1;
 

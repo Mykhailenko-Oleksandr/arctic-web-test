@@ -17,14 +17,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
-  openGraph: {
-    title: "",
-    description: "",
-    url: "https://",
-    images: [{ url: "" }],
-  },
+  title: "Snippets App",
+  description:
+    "A web application for working with snippets: create short entries, view lists, filter by tags, search by title or content, open detailed information, edit and delete. The app includes a convenient form with basic validation and seamless API integration for a smooth and efficient experience.",
 };
 
 export default function RootLayout({

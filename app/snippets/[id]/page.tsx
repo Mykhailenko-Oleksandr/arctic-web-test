@@ -6,6 +6,17 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import SnippetDetailsClient from "./SnippetDetailsClient";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const snippet = await fetchSnipperById(id);
+
+  return {
+    title: `Snippet: ${snippet.title}`,
+    description: snippet.content.slice(0, 30),
+  };
+}
 
 interface Props {
   params: Promise<{ id: string }>;
