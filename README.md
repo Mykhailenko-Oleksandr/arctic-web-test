@@ -7,30 +7,38 @@
 
 ## 🚀 Запуск локально
 
+1.  Клонувати репозиторій і перейти в нього
+
 ```bash
-# 1. Клонувати репозиторій і перейти в нього
 git clone https://github.com/Mykhailenko-Oleksandr/arctic-web-test
 cd arctic-web-test
-
-# 2. Встановити залежності
-npm install
-
-# 3. Запустити dev‑сервер
-npm run dev
 ```
 
-Додаток буде доступний за адресою: http://localhost:3000
+2.  Встановити залежності
+
+```bash
+npm install
+```
+
+3. Запустити dev‑сервер
+
+```bash
+npm run dev
+```
 
 ## 🔍 Перевірка API
 
 Фронтенд працює з бекенд‑ендпоінтами. Для тестування можна використати curl або Postman.
 
-### Отримати всі snippets
+1. Отримати всі snippets
 
+```bash
 Postman/curl http://localhost:3000/api/snippets
+```
 
-### Створити snippet
+2. Створити snippet
 
+```bash
 Postman/curl -X POST http://localhost:3000/api/snippets \
  -H "Content-Type: application/json" \
  -d '{
@@ -39,16 +47,21 @@ Postman/curl -X POST http://localhost:3000/api/snippets \
 "tag": ["Work"],
 "type": "Note"
 }'
+```
 
 ## 📦 Білд та запуск у продакшн‑режимі
 
-# Зібрати застосунок
+1. Зібрати застосунок
 
+```bash
 npm run build
+```
 
-# Запустити у продакшн‑режимі
+2. Запустити у продакшн‑режимі
 
+```bash
 npm run start
+```
 
 За замовчуванням застосунок працює на порту 3000.
 
@@ -56,4 +69,4 @@ npm run start
 
 Демо‑версія доступна за посиланням:
 
-Vercel: ([your-vercel-deploy.vercel.app](https://arctic-web-test.vercel.app/))
+Vercel: ([arctic-web-test.vercel.app](https://arctic-web-test.vercel.app))
