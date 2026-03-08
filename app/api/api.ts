@@ -9,6 +9,6 @@ export type ApiError = AxiosError<{
 }>;
 
 export const api = axios.create({
-  baseURL: "https://arctic-web-test-api.onrender.com",
+  baseURL: "https://arctic-web-test-api-nest.onrender.com",
   withCredentials: true,
 });
