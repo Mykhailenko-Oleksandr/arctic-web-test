@@ -35,7 +35,7 @@ body {
   margin: 0;
   background-color: var(--color-white);
 
-  color: var(--color-neutral-darkest);
+  color: var(--color-dark);
   line-height: 150%;
 
   transition: all 250ms ease;
@@ -47,20 +47,6 @@ body {
 
 main {
   flex-grow: 1;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-
-  white-space: nowrap;
-  clip-path: inset(100%);
-  clip: rect(0 0 0 0);
-  overflow: hidden;
 }
 
 /* =====================================
@@ -97,12 +83,6 @@ button {
   cursor: pointer;
   font-family: inherit;
   color: currentColor;
-}
-
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: none;
 }
 
 input {
