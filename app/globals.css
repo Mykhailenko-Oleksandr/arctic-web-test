@@ -42,7 +42,7 @@ body {
 
   transition: all 250ms ease;
 
-  &.no-scroll {
+  &.noScroll {
     overflow: hidden;
   }
 }
